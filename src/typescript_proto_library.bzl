@@ -1,4 +1,5 @@
 load("//src:typescript_proto_build.bzl", "typescript_proto_build")
+load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
 
 def typescript_proto_library(name, proto, package_name = None, **kwargs):
     typescript_proto_build(
