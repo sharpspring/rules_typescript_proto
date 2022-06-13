@@ -19,4 +19,5 @@ def rules_typescript_proto_dependencies():
         # dependencies shouldn't need to be installed by the user.
         symlink_node_modules = False,
         yarn_lock = "@rules_typescript_proto//:yarn.lock",
+        frozen_lockfile = False,
     )

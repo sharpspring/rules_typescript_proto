@@ -6,8 +6,13 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "build_bazel_rules_nodejs",
-    sha256 = "6142e9586162b179fdd570a55e50d1332e7d9c030efd853453438d607569721d",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/3.0.0/rules_nodejs-3.0.0.tar.gz"],
+    sha256 = "e79c08a488cc5ac40981987d862c7320cee8741122a2649e9b08e850b6f20442",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/3.8.0/rules_nodejs-3.8.0.tar.gz"],
+)
+load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
+node_repositories(
+    # package_json = ["//:package.json"],
+    node_version = "16.6.2",
 )
 
 http_archive(
@@ -58,6 +63,7 @@ yarn_install(
     name = "npm",
     package_json = "//:package.json",
     yarn_lock = "//:yarn.lock",
+    frozen_lockfile = False,
 )
 
 load("@io_bazel_rules_webtesting//web:repositories.bzl", "web_test_repositories")
