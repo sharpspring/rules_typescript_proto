@@ -1,4 +1,4 @@
-load("@npm//@bazel/typescript:index.bzl", "ts_config")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_config")
 
 package(default_visibility = ["//:__subpackages__"])
 

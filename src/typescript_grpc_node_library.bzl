@@ -1,7 +1,11 @@
 load("//src:typescript_proto_build.bzl", "typescript_proto_build")
-load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
+load("@aspect_rules_js//js:defs.bzl", "js_library")
+load("@aspect_rules_js//npm:defs.bzl", "npm_package")
+load("@npm//:defs.bzl", "npm_link_all_packages")
 
-def typescript_grpc_node_library(name, proto, package_name = None, use_grpc_js = False, **kwargs):
+npm_link_all_packages(name = "node_modules")
+
+def typescript_grpc_node_library(name, proto, package_name = None, use_grpc_js = True, **kwargs):
     typescript_proto_build(
         name = name + "_build",
         proto = proto,
@@ -12,11 +16,19 @@ def typescript_grpc_node_library(name, proto, package_name = None, use_grpc_js =
     )
     if package_name == None:
       package_name = name
+    
     js_library(
         name = name,
         srcs = [
             name + "_build"
         ],
-        package_name = "backend/proto/" + package_name
+    )
+
+    npm_package(
+        name = "backend/proto/" + package_name,
+        srcs = [
+            name + "_build"
+        ],
+        visibility = ["//visibility:public"],
     )
 

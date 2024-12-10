@@ -1,7 +1,7 @@
 # rules_typescript_proto
 ![](https://github.com/Dig-Doug/rules_typescript_proto/workflows/ci/badge.svg)
 
-Bazel rules for generating TypeScript declarations for JavaScript protocol buffers using the 
+Bazel rules for generating TypeScript declarations for JavaScript protocol buffers using the
 [ts-protoc-gen](https://github.com/improbable-eng/ts-protoc-gen) protoc plugin. These rules can also
 generate service definitions for use by [grpc-web](https://github.com/improbable-eng/grpc-web) or
 [grpc-node](https://github.com/grpc/grpc-node).
@@ -56,7 +56,7 @@ typescript_proto_library(
 )
 ```
 
-You can now use the `test_ts_proto` target as a `dep` in other `ts_library` targets. However, you 
+You can now use the `test_ts_proto` target as a `dep` in other `ts_library` targets. However, you
 will need to include the following dependencies at runtime yourself:
 
 - `google-protobuf`

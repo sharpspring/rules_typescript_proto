@@ -102,7 +102,7 @@ jasmine_node_test(
     name = "grpc_node_test",
     data = [
         "@npm//google-protobuf",
-        "@npm//grpc",
+        "@npm//@grpc/grpc-js",
     ],
     templated_args = ["--bazel_patch_module_resolver"],
     deps = [

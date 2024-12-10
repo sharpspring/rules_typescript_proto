@@ -1,17 +1,17 @@
-load("@rules_typescript_proto_deps//@bazel/typescript:index.bzl", "ts_library")
-load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
+load("@aspect_rules_js//js:defs.bzl", "js_library")
+load("@aspect_rules_js//js:defs.bzl", "js_binary")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_push")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
 
-nodejs_binary(
+js_binary(
     name = "change_import_style",
-    data = [
-        ":change_import_style_lib",
-    ],
-    entry_point = ":change_import_style.ts",
-    templated_args = ["--bazel_patch_module_resolver"],
+    data = [":tsconfig"],
+    chdir = package_name(),
     visibility = ["//visibility:public"],
+    entry_point = ":change_import_style.ts"
 )
 
-ts_library(
+ts_project(
     name = "change_import_style_lib",
     srcs = [
         "change_import_style.ts",
