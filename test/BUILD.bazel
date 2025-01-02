@@ -1,14 +1,14 @@
-load("@npm//@bazel/jasmine:index.bzl", "jasmine_node_test")
-load("@npm//@bazel/rollup:index.bzl", "rollup_bundle")
-load("@npm//@bazel/typescript:index.bzl", "ts_library")
-load("@npm//@bazel/concatjs:index.bzl", "karma_web_test_suite")
+load(":node_modules/@bazel/jasmine:index.bzl", "jasmine_node_test")
+load(":node_modules/@bazel/rollup:index.bzl", "rollup_bundle")
+load(":node_modules/@bazel/typescript:index.bzl", "ts_library")
+load(":node_modules/@bazel/concatjs:index.bzl", "karma_web_test_suite")
 
 # This test checks that the protos can be resolved in a nodejs environment
 jasmine_node_test(
     name = "commonjs_test",
     data = [
-        "@npm//@improbable-eng/grpc-web",
-        "@npm//google-protobuf",
+        ":node_modules/@improbable-eng/grpc-web",
+        ":node_modules/google-protobuf",
     ],
     templated_args = ["--bazel_patch_module_resolver"],
     deps = [
@@ -27,7 +27,7 @@ ts_library(
         "//test/proto:pizza_service_ts_base_proto",
         "//test/proto:pizza_service_ts_grpc_web_proto",
         "//test/proto/common:delivery_person_ts_proto",
-        "@npm//@types/jasmine",
+        ":node_modules/@types/jasmine",
     ],
 )
 
@@ -36,7 +36,7 @@ ts_library(
 genrule(
     name = "google_protobuf_requirejs",
     srcs = [
-        "@npm//:node_modules/google-protobuf/google-protobuf.js",
+        ":node_modules/:node_modules/google-protobuf/google-protobuf.js",
     ],
     outs = [
         "google-protobuf.js",
@@ -53,7 +53,7 @@ ts_library(
     tsconfig = ":tsconfig.json",
     deps = [
         "//test/proto/common:delivery_person_ts_proto",
-        "@npm//@types/jasmine",
+        ":node_modules/@types/jasmine",
         # Don't put pizza_ts_proto here, we want to test it is included transitively
     ],
 )
@@ -79,7 +79,7 @@ ts_library(
         "//test/proto:pizza_service_ts_base_proto",
         "//test/proto:pizza_service_ts_grpc_web_proto",
         "//test/proto/common:pizza_ts_base_proto",
-        "@npm//@types/jasmine",
+        ":node_modules/@types/jasmine",
         # Don't put delivery_person_ts_proto here, we want to test it is included transitively
     ],
 )
@@ -93,7 +93,7 @@ ts_library(
         "//test/proto:pizza_service_ts_base_proto",
         "//test/proto:pizza_service_ts_grpc_node_proto",
         "//test/proto/common:pizza_ts_base_proto",
-        "@npm//@types/jasmine",
+        ":node_modules/@types/jasmine",
         # Don't put delivery_person_ts_proto here, we want to test it is included transitively
     ],
 )
@@ -101,8 +101,8 @@ ts_library(
 jasmine_node_test(
     name = "grpc_node_test",
     data = [
-        "@npm//google-protobuf",
-        "@npm//@grpc/grpc-js",
+        ":node_modules/google-protobuf",
+        ":node_modules/@grpc/grpc-js",
     ],
     templated_args = ["--bazel_patch_module_resolver"],
     deps = [
@@ -120,8 +120,8 @@ karma_web_test_suite(
     ],
     # Files are served under /base/<WORKSPACE_NAME>/<path>
     static_files = [
-        "@npm//:node_modules/@improbable-eng/grpc-web/dist/grpc-web-client.umd.js",
-        "@npm//:node_modules/browser-headers/dist/browser-headers.umd.js",
+        ":node_modules/:node_modules/@improbable-eng/grpc-web/dist/grpc-web-client.umd.js",
+        ":node_modules/:node_modules/browser-headers/dist/browser-headers.umd.js",
     ],
     tags = ["native"],
     deps = [
@@ -141,8 +141,8 @@ rollup_bundle(
     output_dir = True,
     deps = [
         ":test_bundling_lib",
-        "@npm//rollup-plugin-commonjs",
-        "@npm//rollup-plugin-node-resolve",
+        ":node_modules/rollup-plugin-commonjs",
+        ":node_modules/rollup-plugin-node-resolve",
     ],
 )
 
@@ -157,8 +157,8 @@ ts_library(
         "//test/proto:pizza_service_ts_grpc_web_proto",
         "//test/proto/common:delivery_person_ts_proto",
         "//test/proto/common:pizza_ts_base_proto",
-        "@npm//@improbable-eng/grpc-web",
-        "@npm//google-protobuf",
+        ":node_modules/@improbable-eng/grpc-web",
+        ":node_modules/google-protobuf",
     ],
 )
 

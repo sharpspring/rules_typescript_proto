@@ -19,6 +19,19 @@ load("@aspect_rules_js//js:toolchains.bzl", "DEFAULT_NODE_VERSION", "rules_js_re
 
 rules_js_register_toolchains(node_version = DEFAULT_NODE_VERSION)
 
+load("@aspect_rules_js//npm:repositories.bzl", "npm_translate_lock")
+
+npm_translate_lock(
+    name = "npm",
+    npmrc = "//:.npmrc",
+    pnpm_lock = "//:pnpm-lock.yaml",
+    verify_node_modules_ignored = "//:.bazelignore",
+)
+
+load("@npm//:repositories.bzl", "npm_repositories")
+
+npm_repositories()
+
 # rules ts
 http_archive(
     name = "aspect_rules_ts",
@@ -90,7 +103,7 @@ load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_depe
 
 go_rules_dependencies()
 
-go_register_toolchains()
+go_register_toolchains("host")
 
 load("@io_bazel_rules_webtesting//web:repositories.bzl", "web_test_repositories")
 
@@ -100,6 +113,3 @@ load("@io_bazel_rules_webtesting//web/versioned:browsers-0.3.2.bzl", "browser_re
 
 browser_repositories(chromium = True)
 
-load("@rules_typescript_proto//:index.bzl", "rules_typescript_proto_dependencies")
-
-rules_typescript_proto_dependencies()

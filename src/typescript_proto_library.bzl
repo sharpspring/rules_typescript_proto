@@ -1,10 +1,7 @@
 load("//src:typescript_proto_build.bzl", "typescript_proto_build")
 load("@aspect_rules_js//js:defs.bzl", "js_library")
 load("@aspect_rules_js//npm:defs.bzl", "npm_package")
-load("@npm//:defs.bzl", "npm_link_all_packages")
-load("@npm//:defs.bzl", "npm_link_all_packages")
 
-npm_link_all_packages(name = "node_modules")
 
 def typescript_proto_library(name, proto, package_name = None, **kwargs):
     typescript_proto_build(
